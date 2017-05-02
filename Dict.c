@@ -59,7 +59,7 @@ int buscarPos(char *palabra,TipoNodo *lista){
 			strcpy(palIngles,p -> info.palIngles);
 			p = p -> siguiente;
 			
-		}while(strcmp(palabra,palIngles) > 0);
+		}while(strcmp(palabra,palIngles) != 0);
 
 	}
 	printf("%d",cont);
@@ -138,9 +138,8 @@ TipoNodo *AdicionarPalabra(TipoNodo *lista){
 
 TipoNodo *BuscarPalabraEspanol(TipoNodo *lst){
 	printf("\nIngrese la palabra en Espanol a buscar: ");
-	char palabra[50];
-	fflush(stdin);
-	fgets(palabra, 50, stdin);
+	char *palabra;
+	scanf("%s",palabra);
 	TipoNodo *tmp = lst;
 	while(strcmp(palabra,tmp -> info.palEspanol) != 0){
 		tmp = tmp -> siguiente;
@@ -156,9 +155,8 @@ TipoNodo *BuscarPalabraEspanol(TipoNodo *lst){
 
 TipoNodo *BuscarPalabraIngles(TipoNodo *lst){
 	printf("\nIngrese la palabra en ingles a buscar: ");
-	char palabra[50];
-	fflush(stdin);
-	fgets(palabra, 50, stdin);
+	char *palabra;
+	scanf("%s",palabra);
 	TipoNodo *tmp = lst;
 	while(strcmp(palabra,tmp -> info.palIngles) != 0){
 		if (tmp -> siguiente == NULL){
@@ -276,8 +274,6 @@ int Iniciar(){
 }
 
 
-
-
 TipoNodo *cargarDictALista(char *nombreArch,TipoNodo *lst){
 	TipoDict Registro;
 	FILE *mnjArch = fopen(nombreArch, "rb");
@@ -324,12 +320,13 @@ void ConvertirTxtBin(char *nombreTxt, char *nombreBin){
 }
 
 int main(){
-	//int a = Iniciar();
+	int a = Iniciar();
 	TipoNodo *lista = NULL, *resultado = NULL;
 	ConvertirTxtBin("palabras.txt", "palabras.bin");
 	lista = cargarDictALista("palabras.bin",lista);
-	buscarPos("acronym", lista);
-	/*if(a == 1){
+	//imprimirLista(lista);
+	//buscarPos("Zurich", lista);
+	if(a == 1){
 		resultado = BuscarPalabraEspanol(lista);
 		printf("\n%s\n", resultado -> info.palIngles);
 			
@@ -345,6 +342,6 @@ int main(){
 		guardarListaaArchivo(lista,"backup.txt");
 		
 	}
-	*/
+	
 	return 0;
 }
