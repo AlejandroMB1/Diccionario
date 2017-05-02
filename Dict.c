@@ -168,6 +168,35 @@ TipoNodo *BuscarPalabraIngles(TipoNodo *lst){
 	return tmp;
 }
 
+char* separar(char *linea){
+    char* s1=strtok(linea, " : ");    
+    s1 = strtok(NULL, "\n");
+    return s1;
+}  
+
+
+void ModificarEnArchivo(char *palIngles, char *Ntraduccion){
+	FILE *manejador = fopen("palabras.txt","w");
+	char linea[80];
+	char *resul;
+	int i=strlen(palIngles);
+	char *linea1;
+	while(!feof(manejador)){
+		resul=fgets(linea,80,manejador);
+        if (resul==NULL){
+            break;  
+        }
+    if (strncmp(palIngles,linea,i)==0){
+            printf("%s", palIngles);
+            linea1=separar(linea);
+            printf("%s", palIngles);
+            break;
+ 		}
+    }
+	fflush(manejador);
+	fclose(manejador);
+}
+
 TipoNodo *ModificarTraduccion(TipoNodo *lista){
 	TipoNodo *p = lista;
 	char palIngles[50];
@@ -185,6 +214,7 @@ TipoNodo *ModificarTraduccion(TipoNodo *lista){
 					
 	}while(strcmp(palabra,palIngles) != 0);
 	strcpy(p -> info.palEspanol,nuevo);
+	//ModificarEnArchivo(palIngles,nuevo);
 	return p;
 }
 
@@ -193,7 +223,7 @@ TipoNodo *EliminarPalabraIngles(TipoNodo *lista){
 	int i;
 	TipoNodo *tmp = lista;
 	char palabra[50];
-	printf("Ingrese la palabra que desea eliminar del diccionario: ");
+	printf("\nIngrese la palabra que desea eliminar del diccionario: ");
 	scanf("%s",&palabra);
 	int pos = buscarPos(palabra,lista);
 	printf("%d",pos);
@@ -325,7 +355,7 @@ int main(){
 	ConvertirTxtBin("palabras.txt", "palabras.bin");
 	lista = cargarDictALista("palabras.bin",lista);
 	//imprimirLista(lista);
-	//buscarPos("Zurich", lista);
+	//buscarPos("AIDS", lista);
 	if(a == 1){
 		resultado = BuscarPalabraEspanol(lista);
 		printf("\n%s\n", resultado -> info.palIngles);
